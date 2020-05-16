@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="app_bg">#F0F4F7</color>
+    <color name="status_color">#000000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#666666</color>
+    <!-- 主题 色 -->
+    <color name="theme_color">#A0DA3A</color>
+    <color name="theme_light_color">#c6e988</color>
+    <color name="theme_lighter_color">#f3fae6</color>
+
+    <color name="theme_blue">#0474E5</color>
+    <color name="theme_web_link_blue">#5394f5</color>
+    <color name="theme_light_blue">#10E6D7</color>
+    <color name="pay_color">#3ec3d5</color>
+    <color name="pay_replec_color">#9fe1ea</color>
+    <color name="empower_color">#140c6fd0</color>
+
+    <color name="theme_red">#ff6d7d</color>
+    <color name="red_ff6502">#ff6502</color>
+</resources>
