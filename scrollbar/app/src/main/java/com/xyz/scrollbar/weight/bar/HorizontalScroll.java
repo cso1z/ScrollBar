@@ -2,6 +2,7 @@ package com.xyz.scrollbar.weight.bar;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * 横向滑动条

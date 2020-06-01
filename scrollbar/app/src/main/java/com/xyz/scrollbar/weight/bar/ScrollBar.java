@@ -109,6 +109,7 @@ public class ScrollBar extends View {
             }
         }
         baseScrollBar.setThumbWidth(thumbWidth);
+        Log.e("xx", " thumbWidth:" + thumbWidth);
     }
 
     @Override
@@ -140,17 +141,42 @@ public class ScrollBar extends View {
      * @param percentage 显示区域 与 全部内容区域 比
      */
     public void setThumbWidthPercentage(float percentage) {
+        if (percentage == 1) {
+            setVisibility(GONE);
+        } else {
+            setVisibility(VISIBLE);
+        }
         if (container != null) {
-            this.thumbWidth = (int) ((container.right - container.left) * percentage);
-            invalidate();
+            int thumbWidth = (int) ((container.right - container.left) * percentage);
+            if (thumbWidth != this.thumbWidth) {
+                this.thumbWidth = thumbWidth;
+                requestLayout();
+                Log.e("xx", "percentage:" + percentage + " thumbWidth:" + thumbWidth);
+            }
+        }
+    }
+
+
+    public void setThumbHeightPercentage(float percentage) {
+        if (percentage == 1) {
+            setVisibility(GONE);
+        } else {
+            setVisibility(VISIBLE);
+        }
+        if (container != null) {
+            int thumbWidth = (int) ((container.bottom - container.top) * percentage);
+            if (thumbWidth != this.thumbWidth) {
+                this.thumbWidth = thumbWidth;
+                requestLayout();
+            }
         }
     }
 
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        Log.e("xx", "visibility:" + visibility);
     }
+
 
     /**
      * 设置滑动监听
@@ -178,23 +204,22 @@ public class ScrollBar extends View {
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-                        int extent = recyclerView.computeHorizontalScrollExtent();
+                        int extent;
                         int range;
                         int offset;
                         if (recyclerView.getLayoutManager().canScrollHorizontally()) {
+                            extent = recyclerView.computeHorizontalScrollExtent();
                             range = recyclerView.computeHorizontalScrollRange();
                             offset = recyclerView.computeHorizontalScrollOffset();
+                            setThumbWidthPercentage((float) extent / (float) range);
                         } else {
+                            extent = recyclerView.computeVerticalScrollExtent();
                             range = recyclerView.computeVerticalScrollRange();
                             offset = recyclerView.computeVerticalScrollOffset();
+                            setThumbHeightPercentage((float) extent / (float) range);
+                            Log.e("xx", "extent:" + extent + " range:" + range);
                         }
-                        if (range - extent > 0) {
-                            setVisibility(VISIBLE);
-                            setThumbWidthPercentage((float) extent / (float) range);
-                            setCurrentPercentage((float) offset / (float) (range - extent));
-                        } else {
-                            setVisibility(GONE);
-                        }
+                        setCurrentPercentage((float) offset / (float) (range - extent));
                     }
                 };
             }

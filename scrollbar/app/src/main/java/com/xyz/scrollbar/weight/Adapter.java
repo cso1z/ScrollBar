@@ -29,14 +29,9 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         };
     }
 
-    @Override
-    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-        int position = (int) holder.itemView.getTag();
-        if (position == lastSize - 1) {
-            size = lastSize + (int) (lastSize * 0.2);
-            lastSize = size;
-        }
+    public void addData() {
+        size = size + 4;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -46,8 +41,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.itemView.setTag(position);
     }
 
-    int lastSize = 20;
-    int size = lastSize;
+    int size = 4;
 
     @Override
     public int getItemCount() {

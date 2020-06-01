@@ -1,4 +1,4 @@
-package com.xyz.scrollbar;
+package com.xyz.scrollbar.activity;
 
 import android.os.Bundle;
 import android.util.ArrayMap;
@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xyz.scrollbar.weight.ClickItemView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

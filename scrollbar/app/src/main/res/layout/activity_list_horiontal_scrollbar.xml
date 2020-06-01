@@ -19,4 +19,13 @@
         app:thumb_color="@color/white"
         app:thumb_width="100dp"
         app:track_color="@color/black" />
+
+    <TextView
+        android:id="@+id/add"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="100dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="添加数据" />
 </LinearLayout>

@@ -9,15 +9,24 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="50dp"
-        android:layout_height="match_parent"
-         />
+        android:layout_height="match_parent" />
 
     <com.xyz.scrollbar.weight.bar.ScrollBar
         android:id="@+id/scroll_bar"
-        android:layout_width="20dp"
+        android:layout_width="10dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="4dp"
+        android:visibility="gone"
         app:scroll_type="vertical"
         app:thumb_color="@color/white"
         app:track_color="@color/black" />
+
+    <TextView
+        android:id="@+id/add"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="100dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="添加数据" />
 </LinearLayout>

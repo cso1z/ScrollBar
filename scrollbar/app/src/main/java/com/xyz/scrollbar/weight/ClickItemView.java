@@ -17,6 +17,7 @@ import com.xyz.scrollbar.R;
 import java.util.Locale;
 
 /**
+ *
  * @author shenyonghui
  */
 public class ClickItemView extends AppCompatTextView implements View.OnClickListener {
