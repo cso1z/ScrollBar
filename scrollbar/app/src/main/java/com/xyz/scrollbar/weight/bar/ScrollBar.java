@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -47,6 +46,7 @@ public class ScrollBar extends View {
     }
 
     private int thumbWidth = -1;
+    private float thumbPercentage = 0.33F;
 
     private BaseScrollBar baseScrollBar;
 
@@ -93,7 +93,6 @@ public class ScrollBar extends View {
         container = new RectF();
     }
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -101,15 +100,14 @@ public class ScrollBar extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(widthSize, heightSize);
         container.set(getPaddingLeft(), getPaddingTop(), widthSize - getPaddingRight(), heightSize - getPaddingBottom());
-        if (thumbWidth == -1) {
+        if (thumbWidth <= 0) {
             if (scrollType == HORIZONTAL) {
-                thumbWidth = (int) (container.right - container.left) / 3;
+                thumbWidth = (int) ((container.right - container.left) * thumbPercentage);
             } else {
-                thumbWidth = (int) (container.bottom - container.top) / 3;
+                thumbWidth = (int) ((container.bottom - container.top) * thumbPercentage);
             }
         }
-        baseScrollBar.setThumbWidth(thumbWidth);
-        Log.e("xx", " thumbWidth:" + thumbWidth);
+        baseScrollBar.setThumbLength(thumbWidth);
     }
 
     @Override
@@ -140,36 +138,31 @@ public class ScrollBar extends View {
      *
      * @param percentage 显示区域 与 全部内容区域 比
      */
-    public void setThumbWidthPercentage(float percentage) {
+    public void setThumbPercentage(float percentage) {
         if (percentage == 1) {
             setVisibility(GONE);
         } else {
             setVisibility(VISIBLE);
         }
-        if (container != null) {
-            int thumbWidth = (int) ((container.right - container.left) * percentage);
-            if (thumbWidth != this.thumbWidth) {
-                this.thumbWidth = thumbWidth;
-                requestLayout();
-                Log.e("xx", "percentage:" + percentage + " thumbWidth:" + thumbWidth);
-            }
-        }
-    }
-
-
-    public void setThumbHeightPercentage(float percentage) {
-        if (percentage == 1) {
-            setVisibility(GONE);
+        if (percentage < 0) {
+            this.thumbPercentage = 0f;
+        } else if (percentage > 1) {
+            this.thumbPercentage = 1f;
         } else {
-            setVisibility(VISIBLE);
+            this.thumbPercentage = percentage;
         }
         if (container != null) {
-            int thumbWidth = (int) ((container.bottom - container.top) * percentage);
+            int thumbWidth;
+            if (scrollType == HORIZONTAL) {
+                thumbWidth = (int) ((container.right - container.left) * percentage);
+            } else {
+                thumbWidth = (int) ((container.bottom - container.top) * percentage);
+            }
             if (thumbWidth != this.thumbWidth) {
-                this.thumbWidth = thumbWidth;
                 requestLayout();
             }
         }
+
     }
 
     @Override
@@ -204,20 +197,19 @@ public class ScrollBar extends View {
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-                        int extent;
-                        int range;
-                        int offset;
-                        if (recyclerView.getLayoutManager().canScrollHorizontally()) {
-                            extent = recyclerView.computeHorizontalScrollExtent();
-                            range = recyclerView.computeHorizontalScrollRange();
-                            offset = recyclerView.computeHorizontalScrollOffset();
-                            setThumbWidthPercentage((float) extent / (float) range);
-                        } else {
-                            extent = recyclerView.computeVerticalScrollExtent();
-                            range = recyclerView.computeVerticalScrollRange();
-                            offset = recyclerView.computeVerticalScrollOffset();
-                            setThumbHeightPercentage((float) extent / (float) range);
-                            Log.e("xx", "extent:" + extent + " range:" + range);
+                        int extent = 0, range = 0, offset = 0;
+                        if (recyclerView.getLayoutManager() != null) {
+                            if (recyclerView.getLayoutManager().canScrollHorizontally()) {
+                                extent = recyclerView.computeHorizontalScrollExtent();
+                                range = recyclerView.computeHorizontalScrollRange();
+                                offset = recyclerView.computeHorizontalScrollOffset();
+                                setThumbPercentage((float) extent / (float) range);
+                            } else {
+                                extent = recyclerView.computeVerticalScrollExtent();
+                                range = recyclerView.computeVerticalScrollRange();
+                                offset = recyclerView.computeVerticalScrollOffset();
+                                setThumbPercentage((float) extent / (float) range);
+                            }
                         }
                         setCurrentPercentage((float) offset / (float) (range - extent));
                     }
@@ -238,7 +230,7 @@ public class ScrollBar extends View {
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     PagerAdapter adapter = viewPager.getAdapter();
                     if (adapter != null) {
-                        setThumbWidthPercentage(1f / (float) adapter.getCount());
+                        setThumbPercentage(1f / (float) adapter.getCount());
                         setCurrentPercentage((position + positionOffset) / ((float) adapter.getCount() - 1));
                     }
                 }

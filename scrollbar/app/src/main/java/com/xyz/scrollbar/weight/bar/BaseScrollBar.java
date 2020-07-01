@@ -12,7 +12,7 @@ public abstract class BaseScrollBar {
     Paint paint;
     int trackColor;
     int thumbColor;
-    int thumbWidth;
+    int thumbLength;
     RectF container;
 
     BaseScrollBar() {
@@ -27,8 +27,8 @@ public abstract class BaseScrollBar {
         this.thumbColor = color;
     }
 
-    public void setThumbWidth(int thumbWidth) {
-        this.thumbWidth = thumbWidth;
+    public void setThumbLength(int thumbLength) {
+        this.thumbLength = thumbLength;
     }
 
 

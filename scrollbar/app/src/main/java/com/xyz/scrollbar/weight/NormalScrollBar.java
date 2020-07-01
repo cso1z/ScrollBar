@@ -68,7 +68,7 @@ public class NormalScrollBar extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(widthSize, heightSize);
         container.set(getPaddingLeft(), getPaddingTop(), widthSize - getPaddingRight(), heightSize - getPaddingBottom());
-        if (thumbWidth == -1) {
+        if (thumbWidth <= 0) {
             thumbWidth = (int) (container.right - container.left) / 3;
         }
     }

@@ -17,6 +17,7 @@ import com.xyz.scrollbar.R;
 import java.util.Locale;
 
 /**
+ * 可点击Item
  *
  * @author shenyonghui
  */

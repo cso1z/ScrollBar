@@ -16,10 +16,12 @@
         android:layout_width="10dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:visibility="gone"
         app:scroll_type="vertical"
-        app:thumb_color="@color/white"
-        app:track_color="@color/black" />
+        app:thumb_color="#A0DA3A"
+        app:track_color="#888888" />
 
     <TextView
         android:id="@+id/add"

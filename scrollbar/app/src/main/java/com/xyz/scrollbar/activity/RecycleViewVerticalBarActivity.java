@@ -12,6 +12,7 @@ import com.xyz.scrollbar.weight.Adapter;
 import com.xyz.scrollbar.weight.bar.ScrollBar;
 
 /**
+ * 纵向进度条
  * @author shenyonghui
  */
 public class RecycleViewVerticalBarActivity extends Activity {
